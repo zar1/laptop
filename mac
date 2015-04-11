@@ -80,7 +80,7 @@ brew_is_upgradable() {
 }
 
 brew_tap() {
-  brew tap "$1" 2> /dev/null
+  brew tap "$1" --repair 2> /dev/null
 }
 
 brew_expand_alias() {
@@ -128,33 +128,57 @@ else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
+brew_tap 'thoughtbot/formulae'
+
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
+# Dotfiles
+if ! command -v rcup >/dev/null; then
+  brew_install_or_upgrade 'rcm'
+fi
+
+# Git
 brew_install_or_upgrade 'git'
+brew_install_or_upgrade 'hub'
+
+# Vim
+brew_install_or_upgrade 'vim'
+brew_install_or_upgrade 'ctags'
+
+# Unix
+brew_install_or_upgrade 'the_silver_searcher'
+brew_install_or_upgrade 'tmux'
+brew_install_or_upgrade 'reattach-to-user-namespace'
+brew_install_or_upgrade 'openssl'
+brew unlink openssl && brew link openssl --force
+
+# Databases
 brew_install_or_upgrade 'postgres'
 brew_launchctl_restart 'postgresql'
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
-brew_install_or_upgrade 'the_silver_searcher'
-brew_install_or_upgrade 'vim'
-brew_install_or_upgrade 'ctags'
-brew_install_or_upgrade 'tmux'
-brew_install_or_upgrade 'reattach-to-user-namespace'
+
+# Heroku
+brew_install_or_upgrade 'heroku-toolbelt'
+brew_install_or_upgrade 'parity'
+
+# Images
 brew_install_or_upgrade 'imagemagick'
+
+# Testing
 brew_install_or_upgrade 'qt'
-brew_install_or_upgrade 'hub'
+
+# JavaScript
 brew_install_or_upgrade 'node'
 
+# Ruby
+brew_install_or_upgrade 'libyaml'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
-
-brew_install_or_upgrade 'openssl'
-brew unlink openssl && brew link openssl --force
-brew_install_or_upgrade 'libyaml'
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
@@ -174,13 +198,6 @@ gem_install_or_update 'bundler'
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
-
-brew_install_or_upgrade 'heroku-toolbelt'
-
-if ! command -v rcup >/dev/null; then
-  brew_tap 'thoughtbot/formulae'
-  brew_install_or_upgrade 'rcm'
-fi
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
