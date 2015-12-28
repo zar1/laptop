@@ -212,7 +212,7 @@ fi
 
 gem update --system
 
-fanchy_echo "Installing or updating Bundler ..."
+fancy_echo "Installing or updating Bundler ..."
 gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler ..."
