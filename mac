@@ -216,8 +216,8 @@ fancy_echo "Gems updated."
 
 fancy_echo "Installing or updating Bundler ..."
 gem_install_or_update 'bundler'
-if[$(which bundler) != "zsh: command not found: bundler not found"]; then
-fancy_echo "Bundler installed."
+if [$(which bundler) != "zsh: command not found: bundler not found"]; then
+  fancy_echo "Bundler installed."
 fi
 
 fancy_echo "Configuring Bundler ..."
