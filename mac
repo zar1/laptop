@@ -75,7 +75,7 @@ install_rvm() {
   fi
 }
 
-cask_install_or_update() {
+cask_install_or_upgrade() {
   if cask_is_installed "$1"; then
     if cask_is_upgradable "$1"; then
       fancy_echo "Upgrading %s ..." "$1"
