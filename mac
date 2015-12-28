@@ -185,7 +185,6 @@ brew update
 
 brew_install_or_upgrade 'zsh'
 brew_install_or_upgrade 'git'
-brew_install_or_upgrade 'atom'
 brew_install_or_upgrade 'wget'
 brew_install_or_upgrade 'redis'
 brew_launchctl_restart 'redis'
@@ -200,6 +199,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
+cask_install_or_upgrade 'atom'
 install_rvm
 install_postgres_app
 
