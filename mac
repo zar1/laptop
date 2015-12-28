@@ -75,14 +75,9 @@ install_rvm() {
   fi
 }
 
-cask_install_or_upgrade() {
+cask_install() {
   if cask_is_installed "$1"; then
-    if cask_is_upgradable "$1"; then
-      fancy_echo "Upgrading %s ..." "$1"
-      brew upgrade "$@"
-    else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-    fi
+    fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
   else
     fancy_echo "Installing %s ..." "$1"
     brew cask install "$@"
@@ -93,12 +88,6 @@ cask_is_installed() {
   local name="$(brew_expand_alias "$1")"
 
   brew cask list -1 | grep -Fqx "$name"
-}
-
-cask_is_upgradable() {
-  local name="$(brew_expand_alias "$1")"
-
-  ! brew cask outdated --quiet "$name" >/dev/null
 }
 
 cask_expand_alias() {
@@ -199,7 +188,7 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
-cask_install_or_upgrade 'atom'
+cask_install 'atom'
 install_rvm
 install_postgres_app
 
