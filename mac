@@ -54,7 +54,7 @@ case "$SHELL" in
 esac
 
 install_postgres_app() {
-  if ls /Applications | grep $1; then
+  if ls /Applications | grep Postgres.app; then
     fancy_echo "Postgres is already installed. Skipping ..."
   else
     fancy_echo "Downloading Postgres.app ..."
@@ -196,6 +196,7 @@ install_postgres_app
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 rvm install ruby-$ruby_version
+rvm install ruby-2.2.2
 
 gem update --system
 
