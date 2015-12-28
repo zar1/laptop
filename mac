@@ -206,8 +206,9 @@ fancy_echo "Installing various rubies ..."
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 rvm install ruby-$ruby_version
 rvm install ruby-2.2.2
-if
-fancy_echo "Various rubies installed."
+if [rvm list | grep ruby-2.2.2 && rvm list | grep ruby-$ruby_version]; then
+  fancy_echo "Various rubies installed."
+fi
 
 gem update --system
 
