@@ -146,7 +146,7 @@ brew_launchctl_restart() {
 }
 
 gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
+  if gem list | grep '^bundler (\(.*\))'; then
     fancy_echo "Updating %s ..." "$1"
     gem update "$@"
   else
