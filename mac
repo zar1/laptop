@@ -8,7 +8,7 @@ fancy_echo() {
   local fmt="$1"; shift
 
   # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
+  printf " -- \n$fmt\n" "$@"
 }
 
 append_to_zshrc() {
@@ -210,10 +210,15 @@ if [rvm list | grep ruby-2.2.2 && rvm list | grep ruby-$ruby_version]; then
   fancy_echo "Various rubies installed."
 fi
 
+fancy_echo "Updating gems ..."
 gem update --system
+fancy_echo "Gems updated."
 
 fancy_echo "Installing or updating Bundler ..."
 gem_install_or_update 'bundler'
+if[$(which bundler) != "zsh: command not found: bundler not found"]; then
+fancy_echo "Bundler installed."
+fi
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
