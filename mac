@@ -55,7 +55,7 @@ esac
 
 install_postgres_app() {
   if ls /Applications | grep Postgres.app; then
-    fancy_echo "Postgres is already installed. Skipping ..."
+    fancy_echo "Postgres is already installed. Skipping."
   else
     fancy_echo "Downloading Postgres.app ..."
     wget --directory-prefix=$HOME/Downloads https://github.com/PostgresApp/PostgresApp/releases/download/9.4.5.0/Postgres-9.4.5.0.zip
@@ -70,7 +70,7 @@ install_postgres_app() {
 
 install_rvm() {
   if which rvm; then
-    fancy_echo "RVM is already installed. Skipping ..."
+    fancy_echo "RVM is already installed. Skipping."
   else
     curl -sSL https://get.rvm.io | bash -s stable --ruby
     source $HOME/.rvm/scripts/rvm
@@ -79,7 +79,7 @@ install_rvm() {
 
 cask_install() {
   if cask_is_installed "$1"; then
-    fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+    fancy_echo "Already using the latest version of %s. Skipping." "$1"
   else
     fancy_echo "Installing %s ..." "$1"
     brew cask install "$@"
@@ -102,7 +102,7 @@ brew_install_or_upgrade() {
       fancy_echo "Upgrading %s ..." "$1"
       brew upgrade "$@"
     else
-      fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+      fancy_echo "Already using the latest version of %s. Skipping." "$1"
     fi
   else
     fancy_echo "Installing %s ..." "$1"
@@ -168,7 +168,7 @@ if ! command -v brew >/dev/null; then
 
     export PATH="/usr/local/bin:$PATH"
 else
-  fancy_echo "Homebrew already installed. Skipping ..."
+  fancy_echo "Homebrew already installed. Skipping."
 fi
 
 fancy_echo "Updating Homebrew formulas ..."
@@ -227,6 +227,24 @@ fancy_echo "Configured Bundler."
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
+fi
+
+work_dir="ParkWhiz"
+fancy_echo "Creating ParkWhiz directory ..."
+if ![ -d "$HOME/$work_dir"]; then
+  mkdir $HOME/$work_dir
+fi
+fancy_echo "ParkWhiz directory created."
+
+# ---
+# TODO: Create a public key and output it for them to copy and paste into Github
+# ---
+
+fancy_echo "Pulling down repositories ..."
+if [ -d "$HOME/$work_dir/pw_core_data"]; then
+  fancy_echo "Already have pw_core_data. Skipping."
+else
+  git clone git@github.com:ParkWhiz/pw_core_data.git $HOME/$work_dir/pw_core_data
 fi
 
 fancy_echo "All done!"
