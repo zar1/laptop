@@ -190,22 +190,37 @@ brew_install_or_upgrade 'openssl'
 brew unlink openssl && brew link openssl --force
 brew_install_or_upgrade 'libyaml'
 
-cask_install 'atom'
+fancy_echo "Installing RVM ..."
 install_rvm
-install_postgres_app
+if [$(which rvm) != "zsh: command not found: rvm not found"]; then
+  fancy_echo "RVM installed."
+fi
 
+fancy_echo "Installing Postgres.app ..."
+install_postgres_app
+if ls /Applications | grep Postgres.app; then
+  fancy_echo "Postgres.app installed."
+fi
+
+fancy_echo "Installing various rubies ..."
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 rvm install ruby-$ruby_version
 rvm install ruby-2.2.2
+if
+fancy_echo "Various rubies installed."
 
 gem update --system
 
+fanchy_echo "Installing or updating Bundler ..."
 gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler ..."
   number_of_cores=$(sysctl -n hw.ncpu)
   bundle config --global jobs $((number_of_cores - 1))
+fancy_echo "Configured Bundler."
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "All done!"
