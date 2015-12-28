@@ -58,7 +58,7 @@ install_postgres_app() {
     fancy_echo "Postgres is already installed. Skipping ..."
   else
     fancy_echo "Downloading Postgres.app ..."
-    wget --directory-prefix=/home/user001/www/ https://github.com/PostgresApp/PostgresApp/releases/download/9.4.5.0/Postgres-9.4.5.0.zip
+    wget --directory-prefix=$HOME/Downloads https://github.com/PostgresApp/PostgresApp/releases/download/9.4.5.0/Postgres-9.4.5.0.zip
     fancy_echo "Unzipping Postgres ..."
     unzip $HOME/Downloads/Postgres-9.4.5.0.zip -d $HOME/Downloads
     fancy_echo "Moving Postgres.app to /Applications ..."
