@@ -62,7 +62,7 @@ install_postgres_app() {
     fancy_echo "Unzipping Postgres ..."
     unzip $HOME/Downloads/Postgres-9.4.5.0.zip -d $HOME/Downloads
     fancy_echo "Moving Postgres.app to /Applications ..."
-    mv $HOME/Downloads/Postgres.app /Applications
+    mv $HOME/Downloads/Postgres.app /Applications/Postgres.app
   fi
 }
 
